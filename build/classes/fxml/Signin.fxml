@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="650.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SigninController">
+   <children>
+      <BorderPane prefHeight="400.0" prefWidth="650.0" stylesheets="@../css/style.css">
+         <left>
+            <Pane prefHeight="400.0" prefWidth="325.0" stylesheets="@../css/style.css" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="70.0" fitWidth="60.0" layoutX="128.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/university.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="55.0" layoutY="206.0" text="Welcome back!" textFill="WHITE">
+                     <font>
+                        <Font name="Segoe UI Bold" size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+               <styleClass>
+                  <String fx:value="linear-gradient" />
+                  <String fx:value="left-rounded" />
+               </styleClass>
+            </Pane>
+         </left>
+         <right>
+            <Pane prefHeight="400.0" prefWidth="325.0" stylesheets="@../css/style.css" BorderPane.alignment="CENTER">
+               <children>
+                  <TextField fx:id="tfUsername" layoutX="27.0" layoutY="150.0" prefHeight="35.0" prefWidth="270.0" promptText="Username" styleClass="input" stylesheets="@../css/style.css" />
+                  <PasswordField fx:id="tfPassword" layoutX="26.0" layoutY="208.0" prefHeight="35.0" prefWidth="270.0" promptText="Password" styleClass="input" stylesheets="@../css/style.css" />
+                  <Button layoutX="95.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleSigninAction" prefHeight="35.0" prefWidth="135.0" styleClass="btn" stylesheets="@../css/style.css" text="SIGN IN" textFill="WHITE">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                     <font>
+                        <Font name="Segoe UI Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <ImageView fx:id="btnClose" fitHeight="16.0" fitWidth="16.0" layoutX="294.0" layoutY="15.0" onMouseClicked="#handleCloseSigninPage" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/close.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Label layoutX="109.0" layoutY="52.0" styleClass="title" stylesheets="@../css/style.css" text="Sign in">
+                     <font>
+                        <Font name="Nunito Bold" size="33.0" />
+                     </font>
+                  </Label>
+                  <Line endX="17.800018310546875" endY="7.62939453125E-6" layoutX="177.0" layoutY="103.0" startX="-46.20001220703125" startY="7.62939453125E-6" stroke="#696464" />
+               </children>
+               <styleClass>
+                  <String fx:value="bg-main" />
+                  <String fx:value="right-rounded" />
+               </styleClass>
+            </Pane>
+         </right>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+         <styleClass>
+            <String fx:value="invisible" />
+            <String fx:value="rounded" />
+         </styleClass>
+      </BorderPane>
+   </children>
+   <styleClass>
+      <String fx:value="invisible" />
+      <String fx:value="rounded" />
+   </styleClass>
+</AnchorPane>
