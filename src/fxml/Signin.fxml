@@ -41,7 +41,7 @@
             <Pane prefHeight="400.0" prefWidth="325.0" stylesheets="@../css/style.css" BorderPane.alignment="CENTER">
                <children>
                   <TextField fx:id="tfUsername" layoutX="27.0" layoutY="150.0" prefHeight="35.0" prefWidth="270.0" promptText="Username" styleClass="input" stylesheets="@../css/style.css" />
-                  <PasswordField fx:id="tfPassword" layoutX="26.0" layoutY="208.0" prefHeight="35.0" prefWidth="270.0" promptText="Password" styleClass="input" stylesheets="@../css/style.css" />
+                  <PasswordField fx:id="pfPassword" layoutX="26.0" layoutY="208.0" prefHeight="35.0" prefWidth="270.0" promptText="Password" styleClass="input" stylesheets="@../css/style.css" />
                   <Button layoutX="95.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleSigninAction" prefHeight="35.0" prefWidth="135.0" styleClass="btn" stylesheets="@../css/style.css" text="SIGN IN" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="DEFAULT" />

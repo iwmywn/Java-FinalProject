@@ -30,7 +30,7 @@ public class SigninController {
     private TextField tfUsername;
 
     @FXML
-    private PasswordField tfPassword;
+    private PasswordField pfPassword;
 
     @FXML
     private ImageView btnClose;
@@ -38,7 +38,7 @@ public class SigninController {
     @FXML
     private void handleSigninAction() {
         String username = tfUsername.getText();
-        String password = tfPassword.getText();
+        String password = pfPassword.getText();
         AlertUtils alertUtils = new AlertUtils();
         Stage loginStage = (Stage) tfUsername.getScene().getWindow();
 

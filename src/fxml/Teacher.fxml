@@ -73,7 +73,7 @@
                               <Line endX="235.39996337890625" layoutX="142.0" layoutY="45.0" startX="-100.0" stroke="#696464" />
                               <TextField fx:id="tfUsernameAddAccounts" layoutX="40.0" layoutY="65.0" prefHeight="30.0" prefWidth="236.0" promptText="Username" styleClass="input" stylesheets="@../css/style.css" />
                               <TextField fx:id="tfEmailAddAccounts" layoutX="40.0" layoutY="115.0" prefHeight="30.0" prefWidth="336.0" promptText="Email" styleClass="input" stylesheets="@../css/style.css" />
-                              <PasswordField fx:id="tfPasswordAddAccounts" layoutX="40.0" layoutY="165.0" prefHeight="30.0" prefWidth="336.0" promptText="Password" styleClass="input" stylesheets="@../css/style.css" />
+                              <PasswordField fx:id="pfPasswordAddAccounts" layoutX="40.0" layoutY="165.0" prefHeight="30.0" prefWidth="336.0" promptText="Password" styleClass="input" stylesheets="@../css/style.css" />
                               <TextField fx:id="tfFullnameAddAccounts" layoutX="40.0" layoutY="215.0" prefHeight="30.0" prefWidth="336.0" promptText="Full Name" styleClass="input" stylesheets="@../css/style.css" />
                               <Button layoutX="165.5" layoutY="264.0" mnemonicParsing="false" onAction="#handleAddUserAccountsConfirm" prefHeight="29.0" prefWidth="85.0" styleClass="btn" stylesheets="@../css/style.css" text="Add" />
                               <MenuButton fx:id="mbAddRoleUserAccounts" layoutX="294.0" layoutY="65.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="82.0" styleClass="short-accounts" stylesheets="@../css/style.css" text="Role">
@@ -106,7 +106,7 @@
                               <Line endX="235.39996337890625" layoutX="142.0" layoutY="45.0" startX="-100.0" stroke="#696464" />
                               <TextField fx:id="tfUsernameUpdateAccounts" layoutX="40.0" layoutY="65.0" prefHeight="30.0" prefWidth="236.0" promptText="Username" styleClass="input" stylesheets="@../css/style.css" />
                               <TextField fx:id="tfEmailUpdateAccounts" layoutX="40.0" layoutY="115.0" prefHeight="30.0" prefWidth="336.0" promptText="Email" styleClass="input" stylesheets="@../css/style.css" />
-                              <PasswordField fx:id="tfPasswordUpdateAccounts" layoutX="40.0" layoutY="165.0" prefHeight="30.0" prefWidth="336.0" promptText="Password" styleClass="input" stylesheets="@../css/style.css" />
+                              <PasswordField fx:id="pfPasswordUpdateAccounts" layoutX="40.0" layoutY="165.0" prefHeight="30.0" prefWidth="336.0" promptText="Password" styleClass="input" stylesheets="@../css/style.css" />
                               <TextField fx:id="tfFullnameUpdateAccounts" layoutX="40.0" layoutY="215.0" prefHeight="30.0" prefWidth="336.0" promptText="Full Name" styleClass="input" stylesheets="@../css/style.css" />
                               <Button layoutX="165.5" layoutY="264.0" mnemonicParsing="false" onAction="#handleUpdateUserAccountsConfirm" prefHeight="29.0" prefWidth="85.0" styleClass="btn" stylesheets="@../css/style.css" text="Update" />
                               <MenuButton fx:id="mbUpdateRoleUserAccounts" layoutX="294.0" layoutY="65.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="82.0" styleClass="long-accounts" stylesheets="@../css/style.css" text="Role">
