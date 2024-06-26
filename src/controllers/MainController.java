@@ -428,8 +428,8 @@ public class MainController implements Initializable {
         List<Button> navButtons = Arrays.asList(navAccounts, navCourses, navStudents);
         NavUtils.handleNavButton(navScores, navButtons, this::clearNav);
         activePane(false, false, false, true);
-        loadCoursesForT();
-        loadTeachersForS();
+        loadCoursesByT();
+        loadTeachersByS();
     }
 //    end-nav
 
@@ -1451,7 +1451,7 @@ public class MainController implements Initializable {
 //    end-StudentsPage
 
 //    ----------------------------------------------------------start-ScoresPage
-    private void loadCoursesForT() {
+    private void loadCoursesByT() {
         try (Connection conn = DatabaseUtils.connect()) {
             if (conn == null) {
                 alertUtils.showAlert(Alert.AlertType.ERROR, "Database connection failed!", (Stage) mbCourseScores.getScene().getWindow());
@@ -1496,7 +1496,7 @@ public class MainController implements Initializable {
         }
     }
 
-    private void loadTeachersForS() {
+    private void loadTeachersByS() {
         try (Connection conn = DatabaseUtils.connect()) {
             if (conn == null) {
                 alertUtils.showAlert(Alert.AlertType.ERROR, "Database connection failed!", (Stage) mbTeacherScores.getScene().getWindow());
@@ -1647,7 +1647,7 @@ public class MainController implements Initializable {
         Platform.runLater(() -> {
             tvUserAccounts.getSelectionModel().clearSelection();
             tvCourses.getSelectionModel().clearSelection();
-            loadCoursesForT();
+            loadCoursesByT();
         });
 
 //        ----------------------------------------------------------accountsPage
@@ -1880,7 +1880,7 @@ public class MainController implements Initializable {
 //        ------------------------------------------------------------ScoresPage
 //        loadAcc\fLoad        
         scoreList = FXCollections.observableArrayList();
-        loadTeachersForS();
+        loadTeachersByS();
 //        add\AutoUpdate
         tcStudentIDScores.setCellValueFactory(cellData -> cellData.getValue().studentIDProperty().asObject());
         tcFullNameScores.setCellValueFactory(cellData -> cellData.getValue().fullNameProperty());
