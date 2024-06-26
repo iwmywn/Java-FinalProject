@@ -65,7 +65,7 @@
 
 .bottom-right-rounded {
     -fx-background-radius: 0 0 15 0 !important;
-    -fx-border-radius: 0 0 0 15 !important;
+    -fx-border-radius: 0 0 15 0 !important;
 }
 
 .linear-gradient {
