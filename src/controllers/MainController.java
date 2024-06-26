@@ -363,7 +363,7 @@ public class MainController implements Initializable {
     }
 
 //    -----------------------------------------------------------------start-nav
-    private void ClearNav() {
+    private void clearNav() {
         mbRoleUserAccounts.setText("Role");
         pnAddUserAccounts.setVisible(false);
         pnUpdateUserAccounts.setVisible(false);
@@ -400,7 +400,7 @@ public class MainController implements Initializable {
     @FXML
     void handleNavAccounts(ActionEvent event) {
         List<Button> navButtons = Arrays.asList(navCourses, navStudents, navScores);
-        NavUtils.handleNavButton(navAccounts, navButtons, this::ClearNav);
+        NavUtils.handleNavButton(navAccounts, navButtons, this::clearNav);
         activePane(true, false, false, false);
         loadUserData();
     }
@@ -408,7 +408,7 @@ public class MainController implements Initializable {
     @FXML
     void handleNavCourses(ActionEvent event) {
         List<Button> navButtons = Arrays.asList(navAccounts, navStudents, navScores);
-        NavUtils.handleNavButton(navCourses, navButtons, this::ClearNav);
+        NavUtils.handleNavButton(navCourses, navButtons, this::clearNav);
         activePane(false, true, false, false);
         loadCourseData();
         loadTeachers();
@@ -417,7 +417,7 @@ public class MainController implements Initializable {
     @FXML
     void handleNavStudents(ActionEvent event) {
         List<Button> navButtons = Arrays.asList(navAccounts, navCourses, navScores);
-        NavUtils.handleNavButton(navStudents, navButtons, this::ClearNav);
+        NavUtils.handleNavButton(navStudents, navButtons, this::clearNav);
         activePane(false, false, true, false);
         loadStudentData();
         loadCourses();
@@ -426,7 +426,7 @@ public class MainController implements Initializable {
     @FXML
     void handleNavScores(ActionEvent event) {
         List<Button> navButtons = Arrays.asList(navAccounts, navCourses, navStudents);
-        NavUtils.handleNavButton(navScores, navButtons, this::ClearNav);
+        NavUtils.handleNavButton(navScores, navButtons, this::clearNav);
         activePane(false, false, false, true);
         loadCoursesForT();
         loadTeachersForS();
