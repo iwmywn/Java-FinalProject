@@ -232,8 +232,6 @@ public class DatabaseUtils {
     public static ObservableList<Score> getStudentsByTeacher(int teacherID) {
         ObservableList<Score> scoresList = FXCollections.observableArrayList();
         String getCourseIDQuery = "SELECT CourseID FROM Courses WHERE TeacherID = ?";
-        String getStudentsQuery = "SELECT * FROM Students WHERE CourseID = ?";
-        String getScoresQuery = "SELECT * FROM Scores WHERE StudentID = ?";
 
         try (Connection conn = DatabaseUtils.connect(); PreparedStatement getCourseIDStmt = conn.prepareStatement(getCourseIDQuery)) {
 
@@ -242,31 +240,7 @@ public class DatabaseUtils {
 
             while (coursesRS.next()) {
                 int courseID = coursesRS.getInt("CourseID");
-
-                try (PreparedStatement getStudentsStmt = conn.prepareStatement(getStudentsQuery)) {
-                    getStudentsStmt.setInt(1, courseID);
-                    ResultSet studentsRS = getStudentsStmt.executeQuery();
-
-                    while (studentsRS.next()) {
-                        int studentID = studentsRS.getInt("StudentID");
-                        String fullName = studentsRS.getString("FullName");
-
-                        try (PreparedStatement getScoresStmt = conn.prepareStatement(getScoresQuery)) {
-                            getScoresStmt.setInt(1, studentID);
-                            ResultSet scoresRS = getScoresStmt.executeQuery();
-
-                            while (scoresRS.next()) {
-                                float scoreValue = scoresRS.getFloat("Score");
-                                String description = scoresRS.getString("Description");
-                                System.out.println("FullName: " + fullName + " Score: " + scoreValue);
-
-                                Score score = new Score(fullName, scoreValue, description);
-                                score.setStudentID(studentID);
-                                scoresList.add(score);
-                            }
-                        }
-                    }
-                }
+                scoresList.addAll(getStudentsByCourse(courseID));
             }
         } catch (SQLException e) {
             e.printStackTrace();
