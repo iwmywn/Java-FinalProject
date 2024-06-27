@@ -248,11 +248,16 @@ public class DatabaseUtils {
         return scoresList;
     }
 
-    public static String getFullNameByID(int studentID) {
-        String getFullNameQuery = "SELECT FullName FROM Students WHERE StudentID = ?";
-
+    public static String getFullNameByID(int id, String who) {
+        String getFullNameQuery = null;
+        if ("student".equals(who)) {
+            getFullNameQuery = "SELECT FullName FROM Students WHERE StudentID = ?";
+        } else if("teacher".equals(who)) {
+            getFullNameQuery = "SELECT FullName FROM Users WHERE UserID = ?";
+        }
+        
         try (Connection conn = DatabaseUtils.connect(); PreparedStatement getStudentsStmt = conn.prepareStatement(getFullNameQuery)) {
-            getStudentsStmt.setInt(1, studentID);
+            getStudentsStmt.setInt(1, id);
             ResultSet studentsRS = getStudentsStmt.executeQuery();
 
             while (studentsRS.next()) {

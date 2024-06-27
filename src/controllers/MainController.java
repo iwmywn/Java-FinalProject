@@ -458,10 +458,10 @@ public class MainController implements Initializable {
                         User user = new User(username, email, fullName, password, role);
                         user.setUserID(id);
                         userList.add(user);
-                        tvUserAccounts.getSelectionModel().clearSelection();
                     }
                 }
             }
+            tvUserAccounts.getSelectionModel().clearSelection();
         } catch (SQLException e) {
             e.printStackTrace();
             alertUtils.showAlert(Alert.AlertType.ERROR, "An error occurred while loading users!", (Stage) tvUserAccounts.getScene().getWindow());
@@ -546,14 +546,9 @@ public class MainController implements Initializable {
                 insertUserStmt.executeUpdate();
             }
 
-            User newUser = new User(username, email, fullName, password, role);
-            userList.add(newUser);
-
             alertUtils.showAlert(Alert.AlertType.INFORMATION, "User added successfully!", accountsStage);
             loadUserData();
-            tvUserAccounts.getSelectionModel().clearSelection();
             clearAddUserForm();
-
             pnAddUserAccounts.setVisible(false);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -722,14 +717,9 @@ public class MainController implements Initializable {
                     updateUserStmt.setInt(6, selectedUser.getUserID());
                     updateUserStmt.executeUpdate();
                 }
-                User updatedUser = new User(username, email, fullName, password, role);
-                int selectedIndex = tvUserAccounts.getSelectionModel().getSelectedIndex();
-                userList.set(selectedIndex, updatedUser);
-                loadUserData();
 
                 alertUtils.showAlert(Alert.AlertType.INFORMATION, "User updated successfully!", accountsStage);
-                tvUserAccounts.getSelectionModel().clearSelection();
-
+                loadUserData();
                 pnUpdateUserAccounts.setVisible(false);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -763,10 +753,10 @@ public class MainController implements Initializable {
                         Course course = new Course(courseCode, courseName, credits, teacherID);
                         course.setCourseID(id);
                         courseList.add(course);
-                        tvCourses.getSelectionModel().clearSelection();
                     }
                 }
             }
+            tvCourses.getSelectionModel().clearSelection();
         } catch (SQLException e) {
             e.printStackTrace();
             alertUtils.showAlert(Alert.AlertType.ERROR, "An error occurred while loading courses!", (Stage) tvCourses.getScene().getWindow());
@@ -868,14 +858,9 @@ public class MainController implements Initializable {
                 insertCourseStmt.executeUpdate();
             }
 
-            Course newCourse = new Course(courseCode, courseName, Integer.parseInt(credits), teacherID);
-            courseList.add(newCourse);
-
             alertUtils.showAlert(Alert.AlertType.INFORMATION, "Course added successfully!", coursesStage);
             loadCourseData();
-            tvCourses.getSelectionModel().clearSelection();
             clearAddCourseForm();
-
             pnAddCourses.setVisible(false);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -944,18 +929,7 @@ public class MainController implements Initializable {
                 return;
             }
 
-            String fullName = "";
-
-            String checkquery = "SELECT FullName FROM Users WHERE UserID = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(checkquery)) {
-                stmt.setInt(1, selectedCourse.getTeacherID());
-                try (ResultSet rs = stmt.executeQuery()) {
-                    while (rs.next()) {
-                        fullName = rs.getString("FullName");
-                    }
-                }
-            }
-
+            String fullName = DatabaseUtils.getFullNameByID(selectedCourse.getTeacherID(), "teacher");
             String query = "SELECT CourseCode, CourseName, Credits FROM Courses WHERE CourseID = ?";
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setInt(1, selectedCourse.getCourseID());
@@ -1028,14 +1002,9 @@ public class MainController implements Initializable {
                     updateUserStmt.setInt(5, selectedCourse.getCourseID());
                     updateUserStmt.executeUpdate();
                 }
-                Course updatedCourse = new Course(courseCode, courseName, Integer.parseInt(credits), teacherID);
-                int selectedIndex = tvCourses.getSelectionModel().getSelectedIndex();
-                courseList.set(selectedIndex, updatedCourse);
 
                 alertUtils.showAlert(Alert.AlertType.INFORMATION, "Course updated successfully!", coursesStage);
                 loadCourseData();
-                tvCourses.getSelectionModel().clearSelection();
-
                 pnUpdateCourses.setVisible(false);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -1071,10 +1040,10 @@ public class MainController implements Initializable {
                         Student student = new Student(fullName, gender, dateOfBirth, phoneNumber, address, courseId);
                         student.setStudentID(id);
                         studentList.add(student);
-                        tvStudents.getSelectionModel().clearSelection();
                     }
                 }
             }
+            tvStudents.getSelectionModel().clearSelection();
         } catch (SQLException e) {
             e.printStackTrace();
             alertUtils.showAlert(Alert.AlertType.ERROR, "An error occurred while loading students!", (Stage) tvStudents.getScene().getWindow());
@@ -1161,8 +1130,6 @@ public class MainController implements Initializable {
             }
         }
 
-        System.out.println(courseCodeOnly + "-");
-
         try (Connection conn = DatabaseUtils.connect()) {
             if (conn == null) {
                 alertUtils.showAlert(Alert.AlertType.ERROR, "Database connection failed!", studentsStage);
@@ -1205,14 +1172,9 @@ public class MainController implements Initializable {
                             insertScoreStmt.executeUpdate();
                         }
 
-                        Student newStudent = new Student(fullName, gender, dateOfBirth, phoneNumber, address, courseID);
-                        studentList.add(newStudent);
-
                         alertUtils.showAlert(Alert.AlertType.INFORMATION, "Student added successfully!", studentsStage);
                         loadStudentData();
-                        tvStudents.getSelectionModel().clearSelection();
                         clearAddStudentForm();
-
                         pnAddStudents.setVisible(false);
                     } else {
                         throw new SQLException("Creating student failed, no ID obtained.");
@@ -1307,8 +1269,8 @@ public class MainController implements Initializable {
                 return;
             }
 
-            String courseCode = "";
-            String courseName = "";
+            String courseCode = null;
+            String courseName = null;
 
             String checkquery = "SELECT CourseCode, CourseName FROM Courses WHERE CourseID = ?";
             try (PreparedStatement stmt = conn.prepareStatement(checkquery)) {
@@ -1411,16 +1373,9 @@ public class MainController implements Initializable {
                     updateStudentStmt.setInt(7, studentID);
                     updateStudentStmt.executeUpdate();
                 }
-                Student updatedStudent = new Student(fullName, gender, dateOfBirth, phoneNumber, address, courseID);
-                int selectedIndex = tvStudents.getSelectionModel().getSelectedIndex();
-                studentList.set(selectedIndex, updatedStudent);
-                studentList.clear();
-                loadCourseData();
 
                 alertUtils.showAlert(Alert.AlertType.INFORMATION, "Student updated successfully!", studentsStage);
                 loadStudentData();
-                tvStudents.getSelectionModel().clearSelection();
-
                 pnUpdateStudents.setVisible(false);
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -1527,7 +1482,7 @@ public class MainController implements Initializable {
                 return;
             }
 
-            String fullName = DatabaseUtils.getFullNameByID(selectedScore.getStudentID());
+            String fullName = DatabaseUtils.getFullNameByID(selectedScore.getStudentID(), "student");
             String query = "SELECT Score, Description FROM Scores WHERE StudentID = ?";
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setInt(1, selectedScore.getStudentID());
@@ -1566,8 +1521,8 @@ public class MainController implements Initializable {
                     alertUtils.showAlert(Alert.AlertType.ERROR, "Database connection failed!", scoresStage);
                     return;
                 }
-                
-                String fullName = DatabaseUtils.getFullNameByID(studentID);
+
+                String fullName = DatabaseUtils.getFullNameByID(studentID, "student");
                 String updateScoreQuery = "UPDATE Scores SET Score = ?, Description = ? WHERE StudentID = ?";
                 try (PreparedStatement updateScoreStmt = conn.prepareStatement(updateScoreQuery)) {
                     updateScoreStmt.setFloat(1, Float.parseFloat(score));
