@@ -52,7 +52,7 @@ public class MainController implements Initializable {
     @FXML
     private Button navScores;
     @FXML
-    private Button navSignout;
+    private Button navSignOut;
 
 //    --------------------------------------------------------start-AccountsPage
 //    btn
@@ -339,14 +339,14 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void handleSignout(ActionEvent event) {
-        Stage mainStage = (Stage) navSignout.getScene().getWindow();
+    private void handleSignOut(ActionEvent event) {
+        Stage mainStage = (Stage) navSignOut.getScene().getWindow();
         Optional<ButtonType> rs = alertUtils.showAlert(Alert.AlertType.CONFIRMATION, "Are you sure you want to sign out?", mainStage);
         if (rs.isPresent() && rs.get() == ButtonType.OK) {
             mainStage.close();
 
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Signin.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SignIn.fxml"));
                 Image icon = IconUtils.loadIcon();
                 Parent root = loader.load();
                 Stage signInStage = new Stage();

@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="650.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SigninController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="650.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SignInController">
    <children>
       <BorderPane prefHeight="400.0" prefWidth="650.0" stylesheets="@../css/style.css">
          <left>
@@ -42,7 +42,7 @@
                <children>
                   <TextField fx:id="tfUsername" layoutX="27.0" layoutY="150.0" prefHeight="35.0" prefWidth="270.0" promptText="Username" styleClass="input" stylesheets="@../css/style.css" />
                   <PasswordField fx:id="pfPassword" layoutX="26.0" layoutY="208.0" prefHeight="35.0" prefWidth="270.0" promptText="Password" styleClass="input" stylesheets="@../css/style.css" />
-                  <Button layoutX="95.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleSigninAction" prefHeight="35.0" prefWidth="135.0" styleClass="btn" stylesheets="@../css/style.css" text="SIGN IN" textFill="WHITE">
+                  <Button layoutX="95.0" layoutY="272.0" mnemonicParsing="false" onAction="#handleSignInAction" prefHeight="35.0" prefWidth="135.0" styleClass="btn" stylesheets="@../css/style.css" text="SIGN IN" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="DEFAULT" />
                      </cursor>
@@ -50,7 +50,7 @@
                         <Font name="Segoe UI Bold" size="12.0" />
                      </font>
                   </Button>
-                  <ImageView fx:id="btnClose" fitHeight="16.0" fitWidth="16.0" layoutX="294.0" layoutY="15.0" onMouseClicked="#handleCloseSigninPage" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="btnClose" fitHeight="16.0" fitWidth="16.0" layoutX="294.0" layoutY="15.0" onMouseClicked="#handleCloseSignInPage" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/close.png" />
                      </image>

@@ -22,7 +22,7 @@ public class FinalProject extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Image icon = IconUtils.loadIcon();
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Signin.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/SignIn.fxml"));
         stage.getIcons().add(icon);
         Scene scene = new Scene(root);
 

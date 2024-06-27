@@ -425,7 +425,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button fx:id="navSignout" mnemonicParsing="false" onAction="#handleSignout" prefHeight="34.0" prefWidth="80.0" styleClass="btn-nav" stylesheets="@../css/style.css" text="Sign out">
+            <Button fx:id="navSignOut" mnemonicParsing="false" onAction="#handleSignOut" prefHeight="34.0" prefWidth="80.0" styleClass="btn-nav" stylesheets="@../css/style.css" text="Sign out">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

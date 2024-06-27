@@ -24,7 +24,7 @@ import java.sql.ResultSet;
  *
  * @author tuanh
  */
-public class SigninController {
+public class SignInController {
 
     @FXML
     private TextField tfUsername;
@@ -36,7 +36,7 @@ public class SigninController {
     private ImageView btnClose;
 
     @FXML
-    private void handleSigninAction() {
+    private void handleSignInAction() {
         String username = tfUsername.getText();
         String password = pfPassword.getText();
         AlertUtils alertUtils = new AlertUtils();
@@ -92,7 +92,7 @@ public class SigninController {
     }
 
     @FXML
-    private void handleCloseSigninPage() {
+    private void handleCloseSignInPage() {
         Stage stage = (Stage) btnClose.getScene().getWindow();
         stage.close();
     }
