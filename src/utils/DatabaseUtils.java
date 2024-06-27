@@ -27,22 +27,12 @@ public class DatabaseUtils {
         return conn;
     }
 
-    public static boolean isUsernameExists(Connection conn, String username, int UserID, boolean isAdd) throws SQLException {
+    public static boolean isUsernameExists(Connection conn, String username, String currentUsername, boolean isAdd) throws SQLException {
         String query;
-        String currentUsername = null;
         if (isAdd) {
             query = "SELECT COUNT(*) FROM Users WHERE username = ?";
         } else {
             query = "SELECT COUNT(*) FROM Users WHERE username = ? AND username != ?";
-            String checkquery = "SELECT Username FROM Users WHERE UserID = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(checkquery)) {
-                stmt.setInt(1, UserID);
-                try (ResultSet rs = stmt.executeQuery()) {
-                    while (rs.next()) {
-                        currentUsername = rs.getString("Username");
-                    }
-                }
-            }
         }
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, username);
@@ -55,23 +45,12 @@ public class DatabaseUtils {
         }
     }
 
-    public static boolean isEmailExists(Connection conn, String email, int UserID, boolean isAdd) throws SQLException {
-        System.out.println(email + UserID + isAdd);
+    public static boolean isEmailExists(Connection conn, String email, String currentEmail, boolean isAdd) throws SQLException {
         String query;
-        String currentEmail = null;
         if (isAdd) {
             query = "SELECT COUNT(*) FROM Users WHERE email = ?";
         } else {
             query = "SELECT COUNT(*) FROM Users WHERE email = ? AND email != ?";
-            String checkquery = "SELECT Email FROM Users WHERE UserID = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(checkquery)) {
-                stmt.setInt(1, UserID);
-                try (ResultSet rs = stmt.executeQuery()) {
-                    while (rs.next()) {
-                        currentEmail = rs.getString("Email");
-                    }
-                }
-            }
         }
         try (PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, email);

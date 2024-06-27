@@ -526,12 +526,12 @@ public class MainController implements Initializable {
                 return;
             }
 
-            if (DatabaseUtils.isUsernameExists(conn, username, 1, true)) {
+            if (DatabaseUtils.isUsernameExists(conn, username, null, true)) {
                 alertUtils.showAlert(Alert.AlertType.ERROR, "Username already exists!", accountsStage);
                 return;
             }
 
-            if (DatabaseUtils.isEmailExists(conn, email, 1, true)) {
+            if (DatabaseUtils.isEmailExists(conn, email, null, true)) {
                 alertUtils.showAlert(Alert.AlertType.ERROR, "Email already exists!", accountsStage);
                 return;
             }
@@ -645,8 +645,7 @@ public class MainController implements Initializable {
 
     @FXML
     private void handleUpdateUserAccountsConfirm(ActionEvent event) {
-        int UserID = tvUserAccounts.getSelectionModel().getSelectedItem().getUserID();
-//        String oldUsername = tvUserAccounts.getSelectionModel().getSelectedItem().getUsername();
+//        int UserID = tvUserAccounts.getSelectionModel().getSelectedItem().getUserID();
         String username = tfUsernameUpdateAccounts.getText();
         String email = tfEmailUpdateAccounts.getText();
         String password = pfPasswordUpdateAccounts.getText();
@@ -699,12 +698,12 @@ public class MainController implements Initializable {
                     return;
                 }
 
-                if (DatabaseUtils.isUsernameExists(conn, username, UserID, false)) {
+                if (DatabaseUtils.isUsernameExists(conn, username, selectedUser.getUsername(), false)) {
                     alertUtils.showAlert(Alert.AlertType.ERROR, "Username already exists!", accountsStage);
                     return;
                 }
 
-                if (DatabaseUtils.isEmailExists(conn, email, UserID, false)) {
+                if (DatabaseUtils.isEmailExists(conn, email, selectedUser.getEmail(), false)) {
                     alertUtils.showAlert(Alert.AlertType.ERROR, "Email already exists!", accountsStage);
                     return;
                 }
@@ -721,15 +720,9 @@ public class MainController implements Initializable {
                     updateUserStmt.setString(3, fullName);
                     updateUserStmt.setString(4, password);
                     updateUserStmt.setString(5, role);
-                    updateUserStmt.setInt(6, UserID);
+                    updateUserStmt.setInt(6, selectedUser.getUserID());
                     updateUserStmt.executeUpdate();
                 }
-//                String updateUsernameQuery = "UPDATE Users SET Username = ? WHERE Username = ?";
-//                try (PreparedStatement updateUsernameStmt = conn.prepareStatement(updateUsernameQuery)) {
-//                    updateUsernameStmt.setString(1, newUsername);
-//                    updateUsernameStmt.setString(2, oldUsername);
-//                    updateUsernameStmt.executeUpdate();
-//                }
                 User updatedUser = new User(username, email, fullName, password, role);
                 int selectedIndex = tvUserAccounts.getSelectionModel().getSelectedIndex();
                 userList.set(selectedIndex, updatedUser);
@@ -737,11 +730,6 @@ public class MainController implements Initializable {
 
                 alertUtils.showAlert(Alert.AlertType.INFORMATION, "User updated successfully!", accountsStage);
                 tvUserAccounts.getSelectionModel().clearSelection();
-//                tfUsernameUpdateAccounts.clear();
-//                tfEmailUpdateAccounts.clear();
-//                tfPasswordUpdateAccounts.clear();
-//                tfFullnameUpdateAccounts.clear();
-//                mbUpdateRoleUserAccounts.setText("Role");
 
                 pnUpdateUserAccounts.setVisible(false);
             } catch (SQLException e) {
