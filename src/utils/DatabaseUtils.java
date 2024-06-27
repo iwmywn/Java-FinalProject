@@ -27,14 +27,14 @@ public class DatabaseUtils {
         return conn;
     }
 
-    public static boolean isUsernameExists(Connection conn, String username, String currentUsername, boolean isAdd) throws SQLException {
+    public static boolean isUsernameExists(String username, String currentUsername, boolean isAdd) throws SQLException {
         String query;
         if (isAdd) {
             query = "SELECT COUNT(*) FROM Users WHERE username = ?";
         } else {
             query = "SELECT COUNT(*) FROM Users WHERE username = ? AND username != ?";
         }
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = DatabaseUtils.connect(); PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, username);
             if (!isAdd) {
                 stmt.setString(2, currentUsername);
@@ -45,14 +45,14 @@ public class DatabaseUtils {
         }
     }
 
-    public static boolean isEmailExists(Connection conn, String email, String currentEmail, boolean isAdd) throws SQLException {
+    public static boolean isEmailExists(String email, String currentEmail, boolean isAdd) throws SQLException {
         String query;
         if (isAdd) {
             query = "SELECT COUNT(*) FROM Users WHERE email = ?";
         } else {
             query = "SELECT COUNT(*) FROM Users WHERE email = ? AND email != ?";
         }
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = DatabaseUtils.connect(); PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, email);
             if (!isAdd) {
                 stmt.setString(2, currentEmail);
@@ -63,25 +63,14 @@ public class DatabaseUtils {
         }
     }
 
-    public static boolean isCourseExists(Connection conn, String courseCode, int courseID, boolean isAdd) throws SQLException {
-        System.out.println(courseCode + courseID + isAdd);
+    public static boolean isCourseExists(String courseCode, String currentCourseCode, boolean isAdd) throws SQLException {
         String query;
-        String currentCourseCode = null;
         if (isAdd) {
             query = "SELECT COUNT(*) FROM Courses WHERE CourseCode = ?";
         } else {
             query = "SELECT COUNT(*) FROM Courses WHERE CourseCode = ? AND CourseCode != ?";
-            String checkquery = "SELECT CourseCode FROM Courses WHERE CourseID = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(checkquery)) {
-                stmt.setInt(1, courseID);
-                try (ResultSet rs = stmt.executeQuery()) {
-                    while (rs.next()) {
-                        currentCourseCode = rs.getString("CourseCode");
-                    }
-                }
-            }
         }
-        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = DatabaseUtils.connect(); PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, courseCode);
             if (!isAdd) {
                 stmt.setString(2, currentCourseCode);

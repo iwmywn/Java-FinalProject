@@ -526,12 +526,12 @@ public class MainController implements Initializable {
                 return;
             }
 
-            if (DatabaseUtils.isUsernameExists(conn, username, null, true)) {
+            if (DatabaseUtils.isUsernameExists(username, null, true)) {
                 alertUtils.showAlert(Alert.AlertType.ERROR, "Username already exists!", accountsStage);
                 return;
             }
 
-            if (DatabaseUtils.isEmailExists(conn, email, null, true)) {
+            if (DatabaseUtils.isEmailExists(email, null, true)) {
                 alertUtils.showAlert(Alert.AlertType.ERROR, "Email already exists!", accountsStage);
                 return;
             }
@@ -645,7 +645,6 @@ public class MainController implements Initializable {
 
     @FXML
     private void handleUpdateUserAccountsConfirm(ActionEvent event) {
-//        int UserID = tvUserAccounts.getSelectionModel().getSelectedItem().getUserID();
         String username = tfUsernameUpdateAccounts.getText();
         String email = tfEmailUpdateAccounts.getText();
         String password = pfPasswordUpdateAccounts.getText();
@@ -698,12 +697,12 @@ public class MainController implements Initializable {
                     return;
                 }
 
-                if (DatabaseUtils.isUsernameExists(conn, username, selectedUser.getUsername(), false)) {
+                if (DatabaseUtils.isUsernameExists(username, selectedUser.getUsername(), false)) {
                     alertUtils.showAlert(Alert.AlertType.ERROR, "Username already exists!", accountsStage);
                     return;
                 }
 
-                if (DatabaseUtils.isEmailExists(conn, email, selectedUser.getEmail(), false)) {
+                if (DatabaseUtils.isEmailExists(email, selectedUser.getEmail(), false)) {
                     alertUtils.showAlert(Alert.AlertType.ERROR, "Email already exists!", accountsStage);
                     return;
                 }
@@ -855,7 +854,7 @@ public class MainController implements Initializable {
                 return;
             }
 
-            if (DatabaseUtils.isCourseExists(conn, courseCode, 1, true)) {
+            if (DatabaseUtils.isCourseExists(courseCode, null, true)) {
                 alertUtils.showAlert(Alert.AlertType.ERROR, "CourseCode already exists!", coursesStage);
                 return;
             }
@@ -979,13 +978,12 @@ public class MainController implements Initializable {
 
     @FXML
     private void handleUpdateCourseCoursesConfirm(ActionEvent event) {
-        int courseID = tvCourses.getSelectionModel().getSelectedItem().getCourseID();
-//        String oldCourseCode = tvCourses.getSelectionModel().getSelectedItem().getCourseCode();
         String courseCode = tfCourseCodeUpdateCourses.getText();
         String courseName = tfCourseNameUpdateCourses.getText();
         String credits = mbUpdateCreditsCourses.getText();
         String teacherIDText = mbTeacherIDUpdateCourses.getText();
         int teacherID = 0;
+        Course selectedCourse = tvCourses.getSelectionModel().getSelectedItem();
         Stage coursesStage = (Stage) tvCourses.getScene().getWindow();
 
         Optional<ButtonType> rs = alertUtils.showAlert(Alert.AlertType.CONFIRMATION, "Are you sure you want to update the selected course?", coursesStage);
@@ -1016,7 +1014,7 @@ public class MainController implements Initializable {
                     return;
                 }
 
-                if (DatabaseUtils.isCourseExists(conn, courseCode, courseID, false)) {
+                if (DatabaseUtils.isCourseExists(courseCode, selectedCourse.getCourseCode(), false)) {
                     alertUtils.showAlert(Alert.AlertType.ERROR, "CourseCode already exists!", coursesStage);
                     return;
                 }
@@ -1027,15 +1025,9 @@ public class MainController implements Initializable {
                     updateUserStmt.setString(2, courseName);
                     updateUserStmt.setInt(3, Integer.parseInt(credits));
                     updateUserStmt.setInt(4, teacherID);
-                    updateUserStmt.setInt(5, courseID);
+                    updateUserStmt.setInt(5, selectedCourse.getCourseID());
                     updateUserStmt.executeUpdate();
                 }
-//                String updateUsernameQuery = "UPDATE Courses SET CourseCode = ? WHERE CourseCode = ?";
-//                try (PreparedStatement updateUsernameStmt = conn.prepareStatement(updateUsernameQuery)) {
-//                    updateUsernameStmt.setString(1, newCourseCode);
-//                    updateUsernameStmt.setString(2, oldCourseCode);
-//                    updateUsernameStmt.executeUpdate();
-//                }
                 Course updatedCourse = new Course(courseCode, courseName, Integer.parseInt(credits), teacherID);
                 int selectedIndex = tvCourses.getSelectionModel().getSelectedIndex();
                 courseList.set(selectedIndex, updatedCourse);
