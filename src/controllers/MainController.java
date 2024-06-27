@@ -568,7 +568,7 @@ public class MainController implements Initializable {
         try (Connection conn = DatabaseUtils.connect(); PreparedStatement statement = conn.prepareStatement(checkUsernameQuery)) {
             statement.setInt(1, user.getUserID());
 
-            if (user.getRole().equals("Teacher") && DatabaseUtils.isTeacherWithCourses(conn, user.getUserID())) {
+            if (user.getRole().equals("Teacher") && DatabaseUtils.isTeacherWithCourses(user.getUserID())) {
                 return false;
             }
 
@@ -707,7 +707,7 @@ public class MainController implements Initializable {
                     return;
                 }
 
-                if (role.equals("Manager") && DatabaseUtils.isTeacherWithCourses(conn, selectedUser.getUserID())) {
+                if (role.equals("Manager") && DatabaseUtils.isTeacherWithCourses(selectedUser.getUserID())) {
                     alertUtils.showAlert(Alert.AlertType.ERROR, "Can't update this Teacher to Manager. There are courses associated with this user!", accountsStage);
                     return;
                 }
@@ -890,7 +890,7 @@ public class MainController implements Initializable {
         try (Connection conn = DatabaseUtils.connect(); PreparedStatement statement = conn.prepareStatement(checkCourseCodeQuery)) {
             statement.setInt(1, course.getCourseID());
 
-            if (DatabaseUtils.isCourseWithStudents(conn, course.getCourseID())) {
+            if (DatabaseUtils.isCourseWithStudents(course.getCourseID())) {
                 return false;
             }
 

@@ -81,9 +81,9 @@ public class DatabaseUtils {
         }
     }
 
-    public static boolean isTeacherWithCourses(Connection conn, int userID) throws SQLException {
+    public static boolean isTeacherWithCourses(int userID) throws SQLException {
         String checkTeacherIDQuery = "SELECT COUNT(*) FROM Courses WHERE TeacherID = ?";
-        try (PreparedStatement checkTeacherIDStmt = conn.prepareStatement(checkTeacherIDQuery)) {
+        try (Connection conn = DatabaseUtils.connect(); PreparedStatement checkTeacherIDStmt = conn.prepareStatement(checkTeacherIDQuery)) {
             checkTeacherIDStmt.setInt(1, userID);
             try (ResultSet rs = checkTeacherIDStmt.executeQuery()) {
                 return rs.next() && rs.getInt(1) > 0;
@@ -91,9 +91,9 @@ public class DatabaseUtils {
         }
     }
 
-    public static boolean isCourseWithStudents(Connection conn, int courseID) throws SQLException {
+    public static boolean isCourseWithStudents(int courseID) throws SQLException {
         String checkCourseIDQuery = "SELECT COUNT(*) FROM Students WHERE CourseID = ?";
-        try (PreparedStatement checkCourseIDStmt = conn.prepareStatement(checkCourseIDQuery)) {
+        try (Connection conn = DatabaseUtils.connect(); PreparedStatement checkCourseIDStmt = conn.prepareStatement(checkCourseIDQuery)) {
             checkCourseIDStmt.setInt(1, courseID);
             try (ResultSet rs = checkCourseIDStmt.executeQuery()) {
                 return rs.next() && rs.getInt(1) > 0;
