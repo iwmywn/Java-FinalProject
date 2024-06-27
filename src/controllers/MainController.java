@@ -1439,7 +1439,6 @@ public class MainController implements Initializable {
             }
 
             mbCourseScores.getItems().clear();
-            scoreList.clear();
 
             String query;
             if ("teacher".equalsIgnoreCase(uRole)) {
@@ -1484,7 +1483,6 @@ public class MainController implements Initializable {
             }
 
             mbTeacherScores.getItems().clear();
-            scoreList.clear();
 
             String query = "SELECT UserID, FullName FROM Users WHERE Role = 'Teacher'";
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -1512,10 +1510,6 @@ public class MainController implements Initializable {
         }
     }
 
-//    private void clearUpdateScoreForm() {
-//        tfScoresUpdateScores.clear();
-//        taDescriptionUpdateScores.clear();
-//    }
     @FXML
     private void handleUpdateScoreStudents(ActionEvent event) {
         Score selectedScore = tvScores.getSelectionModel().getSelectedItem();
@@ -1533,17 +1527,7 @@ public class MainController implements Initializable {
                 return;
             }
 
-            String getFullNameQuery = "SELECT FullName FROM Students WHERE StudentID = ?";
-            String fullName = null;
-            try (PreparedStatement getStudentsStmt = conn.prepareStatement(getFullNameQuery)) {
-                getStudentsStmt.setInt(1, selectedScore.getStudentID());
-                ResultSet studentsRS = getStudentsStmt.executeQuery();
-
-                while (studentsRS.next()) {
-                    fullName = studentsRS.getString("FullName");
-                }
-            }
-
+            String fullName = DatabaseUtils.getFullNameByID(selectedScore.getStudentID());
             String query = "SELECT Score, Description FROM Scores WHERE StudentID = ?";
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setInt(1, selectedScore.getStudentID());
@@ -1582,18 +1566,8 @@ public class MainController implements Initializable {
                     alertUtils.showAlert(Alert.AlertType.ERROR, "Database connection failed!", scoresStage);
                     return;
                 }
-
-                String getFullNameQuery = "SELECT FullName FROM Students WHERE StudentID = ?";
-                String fullName = null;
-                try (PreparedStatement getStudentsStmt = conn.prepareStatement(getFullNameQuery)) {
-                    getStudentsStmt.setInt(1, studentID);
-                    ResultSet studentsRS = getStudentsStmt.executeQuery();
-
-                    while (studentsRS.next()) {
-                        fullName = studentsRS.getString("FullName");
-                    }
-                }
-
+                
+                String fullName = DatabaseUtils.getFullNameByID(studentID);
                 String updateScoreQuery = "UPDATE Scores SET Score = ?, Description = ? WHERE StudentID = ?";
                 try (PreparedStatement updateScoreStmt = conn.prepareStatement(updateScoreQuery)) {
                     updateScoreStmt.setFloat(1, Float.parseFloat(score));
@@ -1606,7 +1580,6 @@ public class MainController implements Initializable {
                 updatedScore.setFullName(fullName);
                 int selectedIndex = tvScores.getSelectionModel().getSelectedIndex();
                 scoreList.set(selectedIndex, updatedScore);
-//                scoreList.clear();
 
                 alertUtils.showAlert(Alert.AlertType.INFORMATION, "Score updated successfully!", scoresStage);
                 tvScores.getSelectionModel().clearSelection();

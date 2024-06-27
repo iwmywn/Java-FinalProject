@@ -27,7 +27,7 @@ public class DatabaseUtils {
         return conn;
     }
 
-    public static boolean isUsernameExists(String username, String currentUsername, boolean isAdd) throws SQLException {
+    public static boolean isUsernameExists(String newUsername, String currentUsername, boolean isAdd) throws SQLException {
         String query;
         if (isAdd) {
             query = "SELECT COUNT(*) FROM Users WHERE username = ?";
@@ -35,7 +35,7 @@ public class DatabaseUtils {
             query = "SELECT COUNT(*) FROM Users WHERE username = ? AND username != ?";
         }
         try (Connection conn = DatabaseUtils.connect(); PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, username);
+            stmt.setString(1, newUsername);
             if (!isAdd) {
                 stmt.setString(2, currentUsername);
             }
@@ -45,7 +45,7 @@ public class DatabaseUtils {
         }
     }
 
-    public static boolean isEmailExists(String email, String currentEmail, boolean isAdd) throws SQLException {
+    public static boolean isEmailExists(String newEmail, String currentEmail, boolean isAdd) throws SQLException {
         String query;
         if (isAdd) {
             query = "SELECT COUNT(*) FROM Users WHERE email = ?";
@@ -53,7 +53,7 @@ public class DatabaseUtils {
             query = "SELECT COUNT(*) FROM Users WHERE email = ? AND email != ?";
         }
         try (Connection conn = DatabaseUtils.connect(); PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, email);
+            stmt.setString(1, newEmail);
             if (!isAdd) {
                 stmt.setString(2, currentEmail);
             }
@@ -63,7 +63,7 @@ public class DatabaseUtils {
         }
     }
 
-    public static boolean isCourseExists(String courseCode, String currentCourseCode, boolean isAdd) throws SQLException {
+    public static boolean isCourseExists(String newCourseCode, String currentCourseCode, boolean isAdd) throws SQLException {
         String query;
         if (isAdd) {
             query = "SELECT COUNT(*) FROM Courses WHERE CourseCode = ?";
@@ -71,7 +71,7 @@ public class DatabaseUtils {
             query = "SELECT COUNT(*) FROM Courses WHERE CourseCode = ? AND CourseCode != ?";
         }
         try (Connection conn = DatabaseUtils.connect(); PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, courseCode);
+            stmt.setString(1, newCourseCode);
             if (!isAdd) {
                 stmt.setString(2, currentCourseCode);
             }
@@ -246,5 +246,21 @@ public class DatabaseUtils {
             e.printStackTrace();
         }
         return scoresList;
+    }
+
+    public static String getFullNameByID(int studentID) {
+        String getFullNameQuery = "SELECT FullName FROM Students WHERE StudentID = ?";
+
+        try (Connection conn = DatabaseUtils.connect(); PreparedStatement getStudentsStmt = conn.prepareStatement(getFullNameQuery)) {
+            getStudentsStmt.setInt(1, studentID);
+            ResultSet studentsRS = getStudentsStmt.executeQuery();
+
+            while (studentsRS.next()) {
+                return studentsRS.getString("FullName");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
