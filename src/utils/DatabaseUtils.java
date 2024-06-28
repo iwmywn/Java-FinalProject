@@ -34,7 +34,7 @@ public class DatabaseUtils {
         } else {
             query = "SELECT COUNT(*) FROM Users WHERE username = ? AND username != ?";
         }
-        try (Connection conn = DatabaseUtils.connect(); PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, newUsername);
             if (!isAdd) {
                 stmt.setString(2, currentUsername);
@@ -55,7 +55,7 @@ public class DatabaseUtils {
         } else {
             query = "SELECT COUNT(*) FROM Users WHERE email = ? AND email != ?";
         }
-        try (Connection conn = DatabaseUtils.connect(); PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, newEmail);
             if (!isAdd) {
                 stmt.setString(2, currentEmail);
@@ -76,7 +76,7 @@ public class DatabaseUtils {
         } else {
             query = "SELECT COUNT(*) FROM Courses WHERE CourseCode = ? AND CourseCode != ?";
         }
-        try (Connection conn = DatabaseUtils.connect(); PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = connect(); PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, newCourseCode);
             if (!isAdd) {
                 stmt.setString(2, currentCourseCode);
@@ -92,7 +92,7 @@ public class DatabaseUtils {
 
     public static boolean isTeacherWithCourses(int userID) {
         String checkTeacherIDQuery = "SELECT COUNT(*) FROM Courses WHERE TeacherID = ?";
-        try (Connection conn = DatabaseUtils.connect(); PreparedStatement checkTeacherIDStmt = conn.prepareStatement(checkTeacherIDQuery)) {
+        try (Connection conn = connect(); PreparedStatement checkTeacherIDStmt = conn.prepareStatement(checkTeacherIDQuery)) {
             checkTeacherIDStmt.setInt(1, userID);
             try (ResultSet rs = checkTeacherIDStmt.executeQuery()) {
                 return rs.next() && rs.getInt(1) > 0;
@@ -105,7 +105,7 @@ public class DatabaseUtils {
 
     public static boolean isCourseWithStudents(int courseID) {
         String checkCourseIDQuery = "SELECT COUNT(*) FROM Students WHERE CourseID = ?";
-        try (Connection conn = DatabaseUtils.connect(); PreparedStatement checkCourseIDStmt = conn.prepareStatement(checkCourseIDQuery)) {
+        try (Connection conn = connect(); PreparedStatement checkCourseIDStmt = conn.prepareStatement(checkCourseIDQuery)) {
             checkCourseIDStmt.setInt(1, courseID);
             try (ResultSet rs = checkCourseIDStmt.executeQuery()) {
                 return rs.next() && rs.getInt(1) > 0;
@@ -214,7 +214,7 @@ public class DatabaseUtils {
         String getStudentsQuery = "SELECT * FROM Students WHERE CourseID = ?";
         String getScoresQuery = "SELECT * FROM Scores WHERE StudentID = ?";
 
-        try (Connection conn = DatabaseUtils.connect(); PreparedStatement getStudentsStmt = conn.prepareStatement(getStudentsQuery)) {
+        try (Connection conn = connect(); PreparedStatement getStudentsStmt = conn.prepareStatement(getStudentsQuery)) {
             getStudentsStmt.setInt(1, courseID);
             ResultSet studentsRS = getStudentsStmt.executeQuery();
 
@@ -247,7 +247,7 @@ public class DatabaseUtils {
         ObservableList<Score> scoresList = FXCollections.observableArrayList();
         String getCourseIDQuery = "SELECT CourseID FROM Courses WHERE TeacherID = ?";
 
-        try (Connection conn = DatabaseUtils.connect(); PreparedStatement getCourseIDStmt = conn.prepareStatement(getCourseIDQuery)) {
+        try (Connection conn = connect(); PreparedStatement getCourseIDStmt = conn.prepareStatement(getCourseIDQuery)) {
             getCourseIDStmt.setInt(1, teacherID);
             ResultSet coursesRS = getCourseIDStmt.executeQuery();
 
@@ -269,7 +269,7 @@ public class DatabaseUtils {
             getFullNameQuery = "SELECT FullName FROM Users WHERE UserID = ?";
         }
 
-        try (Connection conn = DatabaseUtils.connect(); PreparedStatement getStudentsStmt = conn.prepareStatement(getFullNameQuery)) {
+        try (Connection conn = connect(); PreparedStatement getStudentsStmt = conn.prepareStatement(getFullNameQuery)) {
             getStudentsStmt.setInt(1, id);
             ResultSet studentsRS = getStudentsStmt.executeQuery();
 
