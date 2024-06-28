@@ -1560,7 +1560,7 @@ public class MainController implements Initializable {
         });
 
 //        ----------------------------------------------------------accountsPage
-//        loadAcc\fLoad
+//        load\fLoad
         userList = FXCollections.observableArrayList();
         loadUserData();
 //        add\AutoUpdate
@@ -1629,7 +1629,7 @@ public class MainController implements Initializable {
         });
 
 //        -----------------------------------------------------------coursesPage
-//        loadAcc\fLoad
+//        load\fLoad
         courseList = FXCollections.observableArrayList();
         loadCourseData();
         loadTeachers();
@@ -1713,7 +1713,7 @@ public class MainController implements Initializable {
         });
 
 //        ----------------------------------------------------------studentsPage
-//        loadAcc\fLoad
+//        load\fLoad
         studentList = FXCollections.observableArrayList();
         loadStudentData();
         loadCourses();
@@ -1787,7 +1787,7 @@ public class MainController implements Initializable {
         });
 
 //        ------------------------------------------------------------ScoresPage
-//        loadAcc\fLoad        
+//        load\fLoad        
         scoreList = FXCollections.observableArrayList();
         loadTeachersByS();
 //        add\AutoUpdate
