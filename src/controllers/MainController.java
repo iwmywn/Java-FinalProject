@@ -386,6 +386,7 @@ public class MainController implements Initializable {
         mbTeacherScores.setText("Teacher");
         pnUpdateScores.setVisible(false);
         tfSearchScoreScores.clear();
+        scoreList.clear();
     }
 
     private void activePane(boolean Accounts, boolean Courses, boolean Students, boolean Scores) {
