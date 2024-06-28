@@ -27,7 +27,7 @@ public class DatabaseUtils {
         return conn;
     }
 
-    public static boolean isUsernameExists(String newUsername, String currentUsername, boolean isAdd) throws SQLException {
+    public static boolean isUsernameExists(String newUsername, String currentUsername, boolean isAdd) {
         String query;
         if (isAdd) {
             query = "SELECT COUNT(*) FROM Users WHERE username = ?";
@@ -42,10 +42,13 @@ public class DatabaseUtils {
             try (ResultSet rs = stmt.executeQuery()) {
                 return rs.next() && rs.getInt(1) > 0;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return false;
     }
 
-    public static boolean isEmailExists(String newEmail, String currentEmail, boolean isAdd) throws SQLException {
+    public static boolean isEmailExists(String newEmail, String currentEmail, boolean isAdd) {
         String query;
         if (isAdd) {
             query = "SELECT COUNT(*) FROM Users WHERE email = ?";
@@ -60,10 +63,13 @@ public class DatabaseUtils {
             try (ResultSet rs = stmt.executeQuery()) {
                 return rs.next() && rs.getInt(1) > 0;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return false;
     }
 
-    public static boolean isCourseExists(String newCourseCode, String currentCourseCode, boolean isAdd) throws SQLException {
+    public static boolean isCourseExists(String newCourseCode, String currentCourseCode, boolean isAdd) {
         String query;
         if (isAdd) {
             query = "SELECT COUNT(*) FROM Courses WHERE CourseCode = ?";
@@ -78,27 +84,36 @@ public class DatabaseUtils {
             try (ResultSet rs = stmt.executeQuery()) {
                 return rs.next() && rs.getInt(1) > 0;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return false;
     }
 
-    public static boolean isTeacherWithCourses(int userID) throws SQLException {
+    public static boolean isTeacherWithCourses(int userID) {
         String checkTeacherIDQuery = "SELECT COUNT(*) FROM Courses WHERE TeacherID = ?";
         try (Connection conn = DatabaseUtils.connect(); PreparedStatement checkTeacherIDStmt = conn.prepareStatement(checkTeacherIDQuery)) {
             checkTeacherIDStmt.setInt(1, userID);
             try (ResultSet rs = checkTeacherIDStmt.executeQuery()) {
                 return rs.next() && rs.getInt(1) > 0;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return false;
     }
 
-    public static boolean isCourseWithStudents(int courseID) throws SQLException {
+    public static boolean isCourseWithStudents(int courseID) {
         String checkCourseIDQuery = "SELECT COUNT(*) FROM Students WHERE CourseID = ?";
         try (Connection conn = DatabaseUtils.connect(); PreparedStatement checkCourseIDStmt = conn.prepareStatement(checkCourseIDQuery)) {
             checkCourseIDStmt.setInt(1, courseID);
             try (ResultSet rs = checkCourseIDStmt.executeQuery()) {
                 return rs.next() && rs.getInt(1) > 0;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return false;
     }
 
     public static ObservableList<User> getUsersByRole(String role) {
@@ -200,7 +215,6 @@ public class DatabaseUtils {
         String getScoresQuery = "SELECT * FROM Scores WHERE StudentID = ?";
 
         try (Connection conn = DatabaseUtils.connect(); PreparedStatement getStudentsStmt = conn.prepareStatement(getStudentsQuery)) {
-
             getStudentsStmt.setInt(1, courseID);
             ResultSet studentsRS = getStudentsStmt.executeQuery();
 
@@ -234,7 +248,6 @@ public class DatabaseUtils {
         String getCourseIDQuery = "SELECT CourseID FROM Courses WHERE TeacherID = ?";
 
         try (Connection conn = DatabaseUtils.connect(); PreparedStatement getCourseIDStmt = conn.prepareStatement(getCourseIDQuery)) {
-
             getCourseIDStmt.setInt(1, teacherID);
             ResultSet coursesRS = getCourseIDStmt.executeQuery();
 
@@ -252,10 +265,10 @@ public class DatabaseUtils {
         String getFullNameQuery = null;
         if ("student".equals(who)) {
             getFullNameQuery = "SELECT FullName FROM Students WHERE StudentID = ?";
-        } else if("teacher".equals(who)) {
+        } else if ("teacher".equals(who)) {
             getFullNameQuery = "SELECT FullName FROM Users WHERE UserID = ?";
         }
-        
+
         try (Connection conn = DatabaseUtils.connect(); PreparedStatement getStudentsStmt = conn.prepareStatement(getFullNameQuery)) {
             getStudentsStmt.setInt(1, id);
             ResultSet studentsRS = getStudentsStmt.executeQuery();
